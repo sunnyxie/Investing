@@ -1,0 +1,130 @@
+CREATE OR REPLACE PACKAGE  DA_INVOICE AS
+/******************************************************************************
+   NAME:       DA_INVOICE
+   PURPOSE:
+
+   REVISIONS:
+   Ver / Date / Author / Description
+   ---------------------------------
+   1.0 / March-14-17 / stevek / Created	
+******************************************************************************/
+
+TYPE sqlcur IS REF CURSOR; 
+
+PROCEDURE CREATE_ROW(
+	o_id OUT INVOICE.ID%TYPE,
+	i_inv_number IN INVOICE.INV_NUMBER%TYPE,
+	i_submitter IN INVOICE.SUBMITTER%TYPE,
+	i_afe IN INVOICE.AFE%TYPE,
+	i_currency IN INVOICE.CURRENCY%TYPE);
+
+PROCEDURE READALL(
+
+cur_out OUT DA_INVOICE.sqlcur);
+
+PROCEDURE READBYPK(
+	i_id IN INVOICE.ID%TYPE,
+cur_out OUT DA_INVOICE.sqlcur);
+
+PROCEDURE READEMPTY(
+cur_out OUT DA_INVOICE.sqlcur);
+
+PROCEDURE UPDATE_ROW(
+	i_id IN INVOICE.ID%TYPE,
+	i_inv_number IN INVOICE.INV_NUMBER%TYPE,
+	i_submitter IN INVOICE.SUBMITTER%TYPE,
+	i_afe IN INVOICE.AFE%TYPE,
+	i_currency IN INVOICE.CURRENCY%TYPE);
+    
+PROCEDURE DELETE_ROW(
+	i_id IN INVOICE.ID%TYPE);
+    
+END DA_INVOICE;
+|
+CREATE OR REPLACE PACKAGE BODY DA_INVOICE AS
+
+PROCEDURE CREATE_ROW(
+	o_id OUT INVOICE.ID%TYPE,
+	i_inv_number IN INVOICE.INV_NUMBER%TYPE,
+	i_submitter IN INVOICE.SUBMITTER%TYPE,
+	i_afe IN INVOICE.AFE%TYPE,
+	i_currency IN INVOICE.CURRENCY%TYPE) IS
+BEGIN
+SELECT INVOICE_SEQ.NEXTVAL INTO o_ID FROM DUAL;
+
+	INSERT INTO INVOICE 
+	 ( 
+		ID,
+		INV_NUMBER,
+		SUBMITTER,
+		AFE,
+		CURRENCY	 ) 
+	 VALUES 
+	 ( 
+		o_id,
+		i_inv_number,
+		i_submitter,
+		i_afe,
+		i_currency	 );
+
+
+END;
+
+PROCEDURE READALL(
+
+cur_out OUT DA_INVOICE.sqlcur) IS
+BEGIN
+OPEN cur_out FOR
+	SELECT ID,INV_NUMBER,SUBMITTER,AFE,CURRENCY
+	FROM INVOICE;
+END;
+
+PROCEDURE READBYPK(
+	i_id IN INVOICE.ID%TYPE,
+cur_out OUT DA_INVOICE.sqlcur) IS
+BEGIN
+OPEN cur_out FOR
+	SELECT ID,INV_NUMBER,SUBMITTER,AFE,CURRENCY
+	FROM INVOICE WHERE 		ID = i_id;
+END;
+
+PROCEDURE READEMPTY(
+cur_out OUT DA_INVOICE.sqlcur) IS
+BEGIN
+OPEN cur_out FOR
+	SELECT ID,INV_NUMBER,SUBMITTER,AFE,CURRENCY
+	FROM INVOICE WHERE rownum < 1;
+END;
+
+PROCEDURE UPDATE_ROW(
+	i_id IN INVOICE.ID%TYPE,
+	i_inv_number IN INVOICE.INV_NUMBER%TYPE,
+	i_submitter IN INVOICE.SUBMITTER%TYPE,
+	i_afe IN INVOICE.AFE%TYPE,
+	i_currency IN INVOICE.CURRENCY%TYPE) IS
+BEGIN
+UPDATE INVOICE
+	 SET
+		INV_NUMBER = i_inv_number,
+		SUBMITTER = i_submitter,
+		AFE = i_afe,
+		CURRENCY = i_currency
+	 WHERE 
+		ID = i_id;
+
+
+END;
+
+PROCEDURE DELETE_ROW(
+	i_id IN INVOICE.ID%TYPE) IS
+BEGIN
+DELETE FROM INVOICE WHERE 
+	ID = i_id;
+
+
+END;
+
+END DA_INVOICE;
+
+
+

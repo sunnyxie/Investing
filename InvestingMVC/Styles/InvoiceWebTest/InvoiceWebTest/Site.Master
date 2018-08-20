@@ -1,0 +1,33 @@
+﻿<%@ Master Language="VB" Inherits="InvoiceWebTest.Site" Codebehind="Site.Master.vb" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>Invoice Web Test</title>
+    <link rel="stylesheet" href="http://common.web.cnrl.com/Current/Styles/cnrl_default.css" type="text/css" runat="server"/>
+    <link rel="Stylesheet" href="\\cnrl.com\cnrl\apps\apps01\CNRLAPPS\WEBAPPS\Test\TestFarmA\content\common\Current\Styles\cnrl_default.css" type="text/css" runat="server"/> 
+    <link rel="stylesheet" href="Styles/site_custom.css" type="text/css" runat="server"/>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body> 
+    <form id="form1" runat="server">
+      <div id="div_header">Invoice Web Test</div>
+      <div id="div_menu">
+          <asp:Menu ID="menu_top"  CssClass="top_menu" runat="server" 
+              DataSourceID="menu_xml_data_source" MaximumDynamicDisplayLevels="5" 
+              Orientation="Horizontal" StaticDisplayLevels="1" ShowStartingNode="false" 
+              DynamicPopOutImageUrl="http://common.web.cnrl.com/Current/Images/arrow_right.gif" 
+              StaticPopOutImageUrl="http://common.web.cnrl.com/Current/Images/arrow_right.gif">
+              <DataBindings>
+                    <asp:MenuItemBinding DataMember="Menu" TextField="text" ValueField="text" NavigateUrlField="url" TargetField="target"  />
+                    <asp:MenuItemBinding DataMember="SubMenu" NavigateUrlField="url" TextField="text" ValueField="text" TargetField="target"/>
+              </DataBindings>
+          </asp:Menu>
+          <asp:XmlDataSource ID="menu_xml_data_source" runat="server" DataFile="~/Menu.xml">
+          </asp:XmlDataSource>
+      </div>
+      <asp:ContentPlaceHolder id="body" runat="server">
+      </asp:ContentPlaceHolder>
+    </form>
+</body>
+</html>

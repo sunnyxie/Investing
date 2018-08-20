@@ -1,0 +1,62 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+CanadianNatural.InvoiceWebTest.BusinessObjects
+</name>
+</assembly>
+<members>
+<member name="M:CanadianNatural.InvoiceWebTest.BusinessObjects.Invoice`1.GetDataAccessObject">
+	<summary>
+ Factory method that creates data access object
+ </summary>
+	<returns>Reference to the data access object</returns>
+</member><member name="M:CanadianNatural.InvoiceWebTest.BusinessObjects.Invoice`1.CreateBusinessRuleObject">
+	<summary>
+ Factory method that creates a business rule object
+ </summary>
+	<returns>Reference to the business rule object</returns>
+</member><member name="P:CanadianNatural.InvoiceWebTest.BusinessObjects.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:CanadianNatural.InvoiceWebTest.BusinessObjects.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:CanadianNatural.InvoiceWebTest.BusinessObjects.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="M:CanadianNatural.InvoiceWebTest.BusinessObjects.InvoiceLineDataAccess.#ctor(OakLeaf.MM.Main.Business.mmBusinessObject)">
+	<summary>
+ Default Constructor 
+ </summary>
+</member><member name="M:CanadianNatural.InvoiceWebTest.BusinessObjects.InvoiceLineEntity.SetDefaultValues">
+	<summary>
+ This method is used to set default values on a new Entity instance.
+ Use the entities public Properties to set default values as required.
+ </summary>
+</member><member name="M:CanadianNatural.InvoiceWebTest.BusinessObjects.InvoiceLine`1.GetDataAccessObject">
+	<summary>
+ Factory method that creates data access object
+ </summary>
+	<returns>Reference to the data access object</returns>
+</member><member name="M:CanadianNatural.InvoiceWebTest.BusinessObjects.InvoiceLine`1.CreateBusinessRuleObject">
+	<summary>
+ Factory method that creates a business rule object
+ </summary>
+	<returns>Reference to the business rule object</returns>
+</member><member name="M:CanadianNatural.InvoiceWebTest.BusinessObjects.InvoiceDataAccess.#ctor(OakLeaf.MM.Main.Business.mmBusinessObject)">
+	<summary>
+ Default Constructor 
+ </summary>
+</member><member name="M:CanadianNatural.InvoiceWebTest.BusinessObjects.InvoiceEntity.SetDefaultValues">
+	<summary>
+ This method is used to set default values on a new Entity instance.
+ Use the entities public Properties to set default values as required.
+ </summary>
+</member>
+</members>
+</doc>

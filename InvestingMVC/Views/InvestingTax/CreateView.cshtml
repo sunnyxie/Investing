@@ -1,0 +1,214 @@
+﻿@model InvestingMVC.Models.InvestingTax
+@Styles.Render("~/Content/me_default.css")
+@using System.Web.Mvc.Html
+
+@{
+    ViewBag.Title = "CreateView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    IEnumerable<InvestingMVC.Models.InvestingTax> recList = (IEnumerable<InvestingMVC.Models.InvestingTax>)ViewBag.recList;
+}
+<script src="~/Scripts/Customs/CreateView.js"></script>
+<h2>CreateView</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>InvestingTax</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Type, "type", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.DropDownListFor(model => model.Type, new SelectList(
+                  InvestingMVC.Constants.Values.TypeList, "Key", "Value"),
+                  htmlAttributes: new { @class = "control-label col-md-2", onchange = "Client_Type_Change(this)" })
+                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.LabelFor(model => model.name, "Stock symbol", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.count, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.count, new { htmlAttributes = new { @class = "form-control", @Value = @ViewBag.DefBuyingCount } })
+                @Html.ValidationMessageFor(model => model.count, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.price, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.commissionFee, "Commission fee", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.commissionFee, new { htmlAttributes = new { @class = "form-control", @Value = @ViewBag.DefCommissionFee } })
+                @Html.ValidationMessageFor(model => model.commissionFee, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.settleDate,"Settle Date", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*<input type="text" value="7/23/2017" style="width: 100px;" name="Date" id="SettleDate" class="hasDatepicker" />*@
+                @Html.EditorFor(model => model.settleDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.settleDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.tradeDate, "Trade Date", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.tradeDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.tradeDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.comments, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.comments, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.comments, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @*<input type="submit" value="Create" class="btn btn-default" />*@
+
+                <input type="submit" value="Add New" class="btn btn-default" onclick="location.href='@Url.Action("Create", "InvestingTax",
+                             new {nShowDayHistory = 1 }
+                           //new InvestingMVC.Models.InvestingTax {
+                           //                             ID = Model.ID,
+                           //                             Price = Model.Price,
+                           //                             SettleDate =Model.SettleDate,
+                           //                             CommissionFee =Model.CommissionFee }
+                           )'" />
+                <a class="v-patient pointer" data-id="0" href="@Url.Action("Create3", "InvestingTax",
+                             new { name  = "Model.PicturePath"})">View HYPER</a>
+            </div>
+
+        </div>
+    </div>
+}
+
+<div>
+    <div class="div_table">
+    </div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<!-- #region day trading history -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary list-panel" id="list-panel">
+            <div class="panel-heading list-panel-heading">
+                <h1 class="panel-title list-panel-title">Records</h1>
+            </div>
+            <div class="panel-body">
+                <table id="dtDayRecs"
+                       class="table table-striped table-bordered"
+                       style="width:100%">
+                    <thead>
+                        @if (recList != null)
+                        {
+                            <tr>
+                                <th width="50px">ID</th>
+                                <th width="75px">Type</th>
+                                <th width="95px">Price</th>
+                                <th width="120px">Settle Date</th>
+                                <th width="110px"></th>
+                                <th width="90px"></th>
+                            </tr>
+                        }
+                    </thead>
+                    <tbody>
+                        @*@if (recList != null)
+                        {
+                            foreach (var asset in recList)
+                            {
+                                <tr>
+                                    <td width="50px" align="center">@asset.id</td>
+                                    <td width="75px" align="center">@asset._type.name </td>
+                                    <td width="95px" align="center">@asset.price    </td>
+                                    <td width="120px" align="center">@asset.settleDate.ToString("MMM-dd-yyyy HH-mm-ss")</td>
+                                    <td width="110px" align="center">@Html.RadioButton("Edit_", @asset.id)</td>
+                                    <td width="90px" align="center">
+                                        @Html.ActionLink(
+                                                          "Modify", "Edit", "InvestingTax", new { id = @asset.id }, new { @class = "btn btn-primary" })
+                                </td>
+                            </tr>
+                            }
+                        }*@
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+
+
+<script type="text/javascript">
+    function Client_Type_Change(obj)
+    {
+        var tranType = $('#Type  option:selected').val();
+      // 3  "Divident"  4, "Cash Contribute"
+        if (tranType == 3 || tranType == 4)
+        {
+            $('#count').val('0');
+            $('#commissionFee').val('0.00');
+        }
+        else
+        {
+
+            //var co = <%= Constants.Values.DefBuyingCount %>;
+            $('#count').val(@ViewBag.DefBuyingCount);
+            $('#commissionFee').val(@ViewBag.DefCommissionFee);
+        }
+
+       
+        //$(' #  Model.Type  option:selected').val();
+    }
+
+    $(document).ready(function () {
+        console.log("yes, ready.")
+        $("#SettleDate").datepicker();
+        $('#dtDayRecs').DataTable({
+            ajax: {
+                url : "/api/records",
+                dataSrc: ""
+            },
+            columns: [
+                {
+                    data: name,
+                    render:function(data, type, records) {
+                        return "<a href='/records/edit/" + records.id + "'>" + records.name + "</a>";
+                    }
+                },
+                {
+                    data: price
+                },
+                {
+                    data : id,
+                    render: function(data) {
+                        return "<button class='btn-link js-delete' data-rec-id=" + data+ ">Delete</button>";
+                    }
+                }
+            ]
+        });
+    });
+</script>

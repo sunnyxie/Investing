@@ -1,0 +1,65 @@
+﻿@model IEnumerable<InvestingMVC.Models.InvestingTax>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div> 
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary list-panel" id="list-panel">
+                <div class="panel-heading list-panel-heading">
+                    <h1 class="panel-title list-panel-title">Records</h1>
+                </div>
+                <div class="panel-body">
+                    <table id="dtRecs"
+                           class="table table-striped table-bordered"
+                           style="width:100%">
+                        <thead>
+                            <tr>
+                                <th width="50px">ID</th>
+                                <th width="75px">Type</th>
+                                <th width="95px">Price</th>
+                                <th width="110px">Commission</th>
+                                <th width="120px">Settle Date</th>
+                                <th width="210px">Comments</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var asset in Model)
+                            {
+                                <tr>
+                                    <td width="50px" align="center">@asset.id</td>
+                                    <td width="75px" align="center">@asset._type.name </td>
+                                    <td width="95px" align="center">@asset.price    </td>
+                                    <td width="110px" align="center">@String.Format("{0:C2}", @asset.commissionFee)</td>
+                                    <td width="120px" align="center">@asset.settleDate.ToString("MMM-dd-yyyy")</td>
+                                    <td width="210px" align="center">@asset.comments</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts
+    {
+        <script type="text/javascript">
+         $(document).ready(function () {
+
+             $('#dtRecs').DataTable();
+     });
+        </script>
+    }
+</body>
+</html>

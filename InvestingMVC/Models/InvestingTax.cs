@@ -19,6 +19,7 @@ namespace InvestingMVC.Models
         public string name { get; set; }
 
         [Required]
+        [Display(Name="type")]
         public int Type { get; set; }
 
         [Required]
@@ -26,16 +27,19 @@ namespace InvestingMVC.Models
 
         [Required]
         [System.ComponentModel.DataAnnotations.Schema.Column("commission", TypeName = "decimal")]
+        [Display(Name = "Commission fee")]
         public decimal commissionFee { get; set; }
 
         public int count { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Settle date")]
         public DateTime settleDate { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
+        [Display(Name ="Trade date")]
         public DateTime tradeDate { get; set; }
 
         [DataType(DataType.MultilineText)]

@@ -15,7 +15,6 @@ namespace InvestingMVC
             DbConfiguration.SetConfiguration(new MySqlEFConfiguration());
 
             gSqlContext = new MySqlContext();
-            //  gSqlContext.InsertData();
         }
     }
 }

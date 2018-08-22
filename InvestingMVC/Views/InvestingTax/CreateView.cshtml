@@ -19,7 +19,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.Type, "type", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @*@Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.DropDownListFor(model => model.Type, new SelectList(
@@ -28,7 +28,7 @@
                 @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
             </div>
 
-            @Html.LabelFor(model => model.name, "Stock symbol", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
@@ -52,7 +52,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.commissionFee, "Commission fee", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.commissionFee, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.commissionFee, new { htmlAttributes = new { @class = "form-control", @Value = @ViewBag.DefCommissionFee } })
                 @Html.ValidationMessageFor(model => model.commissionFee, "", new { @class = "text-danger" })
@@ -125,14 +125,14 @@
                     <thead>
                         @if (recList != null)
                         {
-                            <tr>
+                            @*<tr>
                                 <th width="50px">ID</th>
                                 <th width="75px">Type</th>
                                 <th width="95px">Price</th>
                                 <th width="120px">Settle Date</th>
                                 <th width="110px"></th>
                                 <th width="90px"></th>
-                            </tr>
+                            </tr>*@
                         }
                     </thead>
                     <tbody>
@@ -186,24 +186,23 @@
 
     $(document).ready(function () {
         console.log("yes, ready.")
-        $("#SettleDate").datepicker();
+        // $("#SettleDate").datepicker();
         $('#dtDayRecs').DataTable({
             ajax: {
-                url : "/api/records",
-                dataSrc: ""
+                dataSrc: Html.Raw(ViewBag.MyStates)
             },
             columns: [
                 {
-                    data: name,
+                    data: "name",
                     render:function(data, type, records) {
                         return "<a href='/records/edit/" + records.id + "'>" + records.name + "</a>";
                     }
                 },
                 {
-                    data: price
+                    data: "id"
                 },
                 {
-                    data : id,
+                    data : "id",
                     render: function(data) {
                         return "<button class='btn-link js-delete' data-rec-id=" + data+ ">Delete</button>";
                     }

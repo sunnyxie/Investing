@@ -13,6 +13,7 @@ namespace InvestingMVC
     [DbConfigurationType(typeof(MySqlEFConfiguration))]
     public class MySqlContext : DbContext
     {
+        // DbSets....
         public DbSet<TranType> types { get; set; }
         public DbSet<InvestingTax> records { get; set; }
 
@@ -22,7 +23,6 @@ namespace InvestingMVC
 
             // Database.SetInitializer<MySqlContext>();
         }
-        //DbSets....
 
         public MySqlContext(DbConnection existingConnection, bool contextOwnsConnection)
                : base(existingConnection, contextOwnsConnection)
@@ -31,11 +31,6 @@ namespace InvestingMVC
 
         public static MySqlContext GetMySqlContext()
         {
-            //using (MySqlConnection conn = new MySqlConnection("MyContext"))
-            //{
-            //    conn.Open();
-            //    gsContext = new MySqlContext(conn, false);
-            //}
             return null;
         }
 
@@ -64,8 +59,6 @@ namespace InvestingMVC
         //    {
         //        ent.id = id;
         //        tmp = ent;
-        //    }
-
         //}
 
         public System.Data.DataTable GetAllRecords()

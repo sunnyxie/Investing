@@ -1,0 +1,93 @@
+﻿@model IEnumerable<InvestingMVC.Models.InvestingTax>
+@Styles.Render("~/Content/me_default.css")
+@using System.Web.Mvc.Html
+
+@{
+    ViewBag.Title = "CreateView2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+   // IEnumerable<InvestingMVC.Models.InvestingTax> recList = (IEnumerable<InvestingMVC.Models.InvestingTax>)ViewBag.recList;
+}
+<script src="~/Scripts/Customs/CreateView.js"></script>
+<h2>CreateView2</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>InvestingTax</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+       
+    </div>
+}
+
+<div>
+    <div class="div_table">
+    </div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<!-- #region day trading history -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary list-panel" id="list-panel">
+            <div class="panel-heading list-panel-heading">
+                <h1 class="panel-title list-panel-title">Records</h1>
+                <input type="button" width="190px" onclick="Client_Type_Change();" />
+            </div>
+            <div class="panel-body">
+                <table id="dtDayRecs"
+                       class="table table-striped table-bordered"
+                       style="width:100%">
+                    <thead>
+                      
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#dtDayRecs').DataTable({
+            ajax: {
+                url: "/api/InvestingTax",
+                dataSrc: ""
+            },
+            columns: [
+                {
+                    data: "name",
+                    render:function(data, type, records) {
+                        return "<a href='/records/edit/" + records.id + "'>" + records.name + "</a>";
+                    }
+                },
+                {
+                    data: "id"
+                },
+                {
+                    data : "id",
+                    render: function(data) {
+                        return "<button class='btn-link js-delete' data-rec-id=" + data+ ">Delete</button>";
+                    }
+                }
+            ]
+        });
+    });
+
+
+
+    function Client_Type_Change() {
+        var statesAvailable = { "name": "John", "age": 30, "id": 2 };
+        $.each(statesAvailable, function (value) {
+            alert(value["name"]);
+        });
+    }
+
+</script>

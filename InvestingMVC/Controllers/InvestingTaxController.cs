@@ -58,9 +58,23 @@ namespace InvestingMVC.Controllers
             try
             {
                 InvestingTax tmp = taxObj.ShallowCopy();
-                //tmp.Comments = taxObj.Comments;
+                DateTime settleDate = taxObj.tradeDate.AddDays(Constants.Values.MaxWaitingDays);
                 tmp.name = taxObj.name.ToUpper();
-                tmp.settleDate = taxObj.tradeDate.AddDays(Constants.Values.MaxWaitingDays);
+                if (settleDate.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    settleDate.AddDays(1);
+                }
+                else if (settleDate.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    settleDate.AddDays(2);
+                }
+
+                if (settleDate.Month == 7 & settleDate.Day == 1)   // Canada Day
+                {
+                    settleDate.AddDays(1);
+                }
+
+                tmp.settleDate = settleDate;
                 _context.InsertNewRec(tmp);
                 _context.SaveChanges();
 

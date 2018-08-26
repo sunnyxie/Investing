@@ -20,13 +20,26 @@ namespace InvestingMVC.Controllers.Api
 
         // GET /api/InvestingTax  [Route("api/InvestingTax")]
         // public HttpResponseMessage GetInvestingTaxs(string query = null)
-        public IHttpActionResult GetInvestingTaxs(string query = null)
+        public IHttpActionResult GetInvestingTaxs(string query = null, string dtDate = null)
         {
             var recsQuery = _context.records
                 .Include(c => c._type);
 
             if (!String.IsNullOrWhiteSpace(query))
                 recsQuery = recsQuery.Where(c => c.name.Contains(query));
+
+            if (!string.IsNullOrWhiteSpace(dtDate))
+            {
+                DateTime dTmp;
+                if (DateTime.TryParseExact(dtDate,
+                                           "yyyyMMdd",
+                                           System.Globalization.CultureInfo.InvariantCulture,
+                                           System.Globalization.DateTimeStyles.None,
+                                           out dTmp))
+                {
+                    recsQuery = recsQuery.Where(c => DbFunctions.TruncateTime(c.tradeDate) == (dTmp.Date));
+                }
+            }
 
             IList<InvestingTax> recDtos = recsQuery
                 .ToList();

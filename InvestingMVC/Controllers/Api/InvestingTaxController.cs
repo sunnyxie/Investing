@@ -2,10 +2,9 @@
 using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using InvestingMVC.Models;
+using System.Threading.Tasks;
 
 namespace InvestingMVC.Controllers.Api
 {
@@ -20,7 +19,7 @@ namespace InvestingMVC.Controllers.Api
 
         // GET /api/InvestingTax  [Route("api/InvestingTax")]
         // public HttpResponseMessage GetInvestingTaxs(string query = null)
-        public IHttpActionResult GetInvestingTaxs(string query = null, string dtDate = null)
+        public async Task<IHttpActionResult> GetInvestingTaxs(string query = null, string dtDate = null)
         {
             var recsQuery = _context.records
                 .Include(c => c._type);
@@ -41,8 +40,19 @@ namespace InvestingMVC.Controllers.Api
                 }
             }
 
+
+
             IList<InvestingTax> recDtos = recsQuery
                 .ToList();
+
+            // Get the real quotes 
+            foreach (InvestingTax stick in recDtos)
+            {
+                Task<Api.AlphaVantageApiWrapper.AlphaVantageRootObject> quotes =
+                   Api.StockQuote.GetTheQuoteAsync(stick.name, 1);
+                stick.activePrice = await quotes.
+            }
+
             // return Request.CreateResponse(HttpStatusCode.OK, recDtos, Configuration.Formatters.JsonFormatter);
             return Ok(recDtos);
         }

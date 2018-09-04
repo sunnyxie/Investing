@@ -21,5 +21,6 @@ namespace InvestingMVC.Constants
 
         public const double DefCommissionFee= 6.95;
 
+        public const string AlphaAPIKey = "SNTHLFL54B25V1WX";
     }
 }

@@ -25,6 +25,8 @@ namespace InvestingMVC.Models
         [Required]
         public decimal price { get; set; }
 
+        public decimal activePrice { get; set; }
+
         [Required]
         [System.ComponentModel.DataAnnotations.Schema.Column("commission", TypeName = "decimal")]
         [Display(Name = "Commission fee")]
@@ -33,7 +35,7 @@ namespace InvestingMVC.Models
         public int count { get; set; }
 
         [Required]
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Settle date")]
         public DateTime settleDate { get; set; }

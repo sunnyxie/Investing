@@ -6,9 +6,10 @@
     ViewBag.Title = "CreateView";
     Layout = "~/Views/Shared/_Layout.cshtml";
     IEnumerable<InvestingMVC.Models.InvestingTax> recList = (IEnumerable<InvestingMVC.Models.InvestingTax>)ViewBag.recList;
+    <script src="~/Scripts/Customs/CreateView.js"></script>
+
 }
-<script src="~/Scripts/Customs/CreateView.js"></script>
-<h2>CreateView</h2>
+<h2>Create Record</h2>
 
 @using (Html.BeginForm())
 {
@@ -113,7 +114,7 @@
 
 <!-- #region day trading history -->
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12" style="height:450px;">
         <div class="panel panel-primary list-panel" id="list-panel">
             <div class="panel-heading list-panel-heading">
                 <h1 class="panel-title list-panel-title">Records</h1>
@@ -121,38 +122,11 @@
             <div class="panel-body">
                 <table id="dtDayRecs"
                        class="table table-striped table-bordered"
-                       style="width:100%">
+                       style="width:100%;height:400px;">
                     <thead>
-                        @if (recList != null)
-                        {
-                            @*<tr>
-                                <th width="50px">ID</th>
-                                <th width="75px">Type</th>
-                                <th width="95px">Price</th>
-                                <th width="120px">Settle Date</th>
-                                <th width="110px"></th>
-                                <th width="90px"></th>
-                            </tr>*@
-                        }
                     </thead>
                     <tbody>
-                        @*@if (recList != null)
-                        {
-                            foreach (var asset in recList)
-                            {
-                                <tr>
-                                    <td width="50px" align="center">@asset.id</td>
-                                    <td width="75px" align="center">@asset._type.name </td>
-                                    <td width="95px" align="center">@asset.price    </td>
-                                    <td width="120px" align="center">@asset.settleDate.ToString("MMM-dd-yyyy HH-mm-ss")</td>
-                                    <td width="110px" align="center">@Html.RadioButton("Edit_", @asset.id)</td>
-                                    <td width="90px" align="center">
-                                        @Html.ActionLink(
-                                                          "Modify", "Edit", "InvestingTax", new { id = @asset.id }, new { @class = "btn btn-primary" })
-                                </td>
-                            </tr>
-                            }
-                        }*@
+                      
                     </tbody>
                 </table>
             </div>
@@ -163,6 +137,24 @@
 
 
 <script type="text/javascript">
+
+    function GetTodayStr3() {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+
+        // today = mm + '/' + dd + '/' + yyyy;
+        return yyyy + mm + dd;
+    }
     function Client_Type_Change(obj)
     {
         var tranType = $('#Type  option:selected').val();
@@ -185,11 +177,13 @@
     }
 
     $(document).ready(function () {
-        console.log("yes, ready.")
-        // $("#SettleDate").datepicker();
+         console.log("yes, ready.")
+         var apiUrl = "/api/InvestingTax?dtDate=" + GetTodayStr3();
+        alert(apiUrl);
         $('#dtDayRecs').DataTable({
             ajax: {
-                dataSrc: Html.Raw(ViewBag.MyStates)
+                url: apiUrl,
+                dataSrc: ""
             },
             columns: [
                 {

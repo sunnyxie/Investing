@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using InvestingMVC.Models;
 using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace InvestingMVC.Controllers
 {
@@ -74,10 +75,15 @@ namespace InvestingMVC.Controllers
                     settleDate.AddDays(1);
                 }
 
+                Task<Api.AlphaVantageApiWrapper.AlphaVantageRootObject> quotes = 
+                    Api.StockQuote.GetTheQuoteAsync("BABA", 1);
+
                 tmp.settleDate = settleDate;
                 _context.InsertNewRec(tmp);
                 _context.SaveChanges();
 
+                //Api.AlphaVantageApiWrapper.AlphaVantageRootObject resl = await quotes;
+                GetQuotesAsync("BABA");
                 //return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -88,12 +94,12 @@ namespace InvestingMVC.Controllers
 
 
             // db Function TruncateTime created at database side.
-            var records = _context.records.Where(r => DbFunctions.TruncateTime(r.tradeDate)
-                                                                  == DateTime.Today)
-                                                          .Include(r => r._type)
-                                                          .OrderByDescending(r => r.tradeDate)
-                                                          .ToList();
-            ViewBag.recList = records;
+            //var records = _context.records.Where(r => DbFunctions.TruncateTime(r.tradeDate)
+            //                                                      == DateTime.Today)
+            //                                              .Include(r => r._type)
+            //                                              .OrderByDescending(r => r.tradeDate)
+            //                                              .ToList();
+            ViewBag.recList = null;
 
             ViewBag.DefBuyingCount = Constants.Values.DefBuyingCount;
             ViewBag.DefCommissionFee = Constants.Values.DefCommissionFee;
@@ -106,8 +112,7 @@ namespace InvestingMVC.Controllers
             //}, "id", "name", -1);
             // ViewBag.MyStates = Newtonsoft.Json.JsonConvert.SerializeObject(MyStates);
 
-            // Newtonsoft.Json.JsonConvert.SerializeObject(records));
-            return View("CreateView2", records);
+            return View("CreateView2", null);
             //  return View("CreateView", null);
         }
 
@@ -158,6 +163,14 @@ namespace InvestingMVC.Controllers
             {
                 return View();
             }
+        }
+
+        protected async Task GetQuotesAsync(string name)
+        {
+            Task<Api.AlphaVantageApiWrapper.AlphaVantageRootObject> quotes =
+                   Api.StockQuote.GetTheQuoteAsync(name, 1);
+
+            Api.AlphaVantageApiWrapper.AlphaVantageRootObject resl = await quotes;
         }
     }
 }

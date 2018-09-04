@@ -75,15 +75,11 @@ namespace InvestingMVC.Controllers
                     settleDate.AddDays(1);
                 }
 
-                Task<Api.AlphaVantageApiWrapper.AlphaVantageRootObject> quotes = 
-                    Api.StockQuote.GetTheQuoteAsync("BABA", 1);
-
                 tmp.settleDate = settleDate;
                 _context.InsertNewRec(tmp);
                 _context.SaveChanges();
 
                 //Api.AlphaVantageApiWrapper.AlphaVantageRootObject resl = await quotes;
-                GetQuotesAsync("BABA");
                 //return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -167,10 +163,10 @@ namespace InvestingMVC.Controllers
 
         protected async Task GetQuotesAsync(string name)
         {
-            Task<Api.AlphaVantageApiWrapper.AlphaVantageRootObject> quotes =
-                   Api.StockQuote.GetTheQuoteAsync(name, 1);
+            //Task<Api.AlphaVantageApiWrapper.AlphaVantageRootObject> quotes =
+            //       Api.StockQuote.GetTheQuoteAsync(name, 1);
 
-            Api.AlphaVantageApiWrapper.AlphaVantageRootObject resl = await quotes;
+            //Api.AlphaVantageApiWrapper.AlphaVantageRootObject resl = await quotes;
         }
     }
 }

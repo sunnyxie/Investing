@@ -48,9 +48,9 @@ namespace InvestingMVC.Controllers.Api
             // Get the real quotes 
             foreach (InvestingTax stick in recDtos)
             {
-                Task<Api.AlphaVantageApiWrapper.AlphaVantageRootObject> quotes =
-                   Api.StockQuote.GetTheQuoteAsync(stick.name, 1);
-                stick.activePrice = await quotes.
+                //Task<Api.AlphaVantageApiWrapper.AlphaVantageRootObject> quotes =
+                //   Api.StockQuote.GetTheQuoteAsync(stick.name, 1);
+                //stick.activePrice = await quotes.
             }
 
             // return Request.CreateResponse(HttpStatusCode.OK, recDtos, Configuration.Formatters.JsonFormatter);

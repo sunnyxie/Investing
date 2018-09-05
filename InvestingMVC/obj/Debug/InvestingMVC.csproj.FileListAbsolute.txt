@@ -144,4 +144,3 @@ D:\projects\GitRepo\InvestingMVC\InvestingMVC\bin\Microsoft.Owin.Security.Twitte
 D:\projects\GitRepo\InvestingMVC\InvestingMVC\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\projects\GitRepo\InvestingMVC\InvestingMVC\obj\Debug\InvestingMVC.dll
 D:\projects\GitRepo\InvestingMVC\InvestingMVC\obj\Debug\InvestingMVC.pdb
-D:\projects\GitRepo\InvestingMVC\InvestingMVC\obj\Debug\InvestingMVC.csprojResolveAssemblyReference.cache

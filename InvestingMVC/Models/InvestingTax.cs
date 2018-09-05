@@ -25,6 +25,7 @@ namespace InvestingMVC.Models
         [Required]
         public decimal price { get; set; }
 
+        [NotMapped]
         public decimal activePrice { get; set; }
 
         [Required]

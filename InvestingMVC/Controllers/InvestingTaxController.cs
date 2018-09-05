@@ -109,7 +109,6 @@ namespace InvestingMVC.Controllers
             // ViewBag.MyStates = Newtonsoft.Json.JsonConvert.SerializeObject(MyStates);
 
             return View("CreateView2", null);
-            //  return View("CreateView", null);
         }
 
         // GET: InvestingTax/Edit/5
@@ -161,12 +160,6 @@ namespace InvestingMVC.Controllers
             }
         }
 
-        protected async Task GetQuotesAsync(string name)
-        {
-            //Task<Api.AlphaVantageApiWrapper.AlphaVantageRootObject> quotes =
-            //       Api.StockQuote.GetTheQuoteAsync(name, 1);
-
-            //Api.AlphaVantageApiWrapper.AlphaVantageRootObject resl = await quotes;
-        }
+      
     }
 }

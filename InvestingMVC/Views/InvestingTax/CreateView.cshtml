@@ -107,7 +107,7 @@
 }
 
 <div>
-    <div class="div_table">
+    <div id="jsonData" class="div_table">
     </div>
     @Html.ActionLink("Back to List", "Index")
 </div>
@@ -122,7 +122,7 @@
             <div class="panel-body">
                 <table id="dtDayRecs"
                        class="table table-striped table-bordered"
-                       style="width:100%;height:400px;">
+                       style="width:100%;height:80px;">
                     <thead>
                     </thead>
                     <tbody>
@@ -177,9 +177,7 @@
     }
 
     $(document).ready(function () {
-         console.log("yes, ready.")
-         var apiUrl = "/api/InvestingTax?dtDate=" + GetTodayStr3();
-        alert(apiUrl);
+        var apiUrl = "/api/InvestingTax?dtDate="  + GetTodayStr3();
         $('#dtDayRecs').DataTable({
             ajax: {
                 url: apiUrl,
@@ -203,5 +201,30 @@
                 }
             ]
         });
-    });
+
+    var GetJson = function () {
+        $.ajax({
+            type: "GET",
+            url: "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=5min&apikey=SNTHLFL54B25V1WX",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                var time_period = data["Meta Data"]["3. Last Refreshed"];
+                var name = data["Meta Data"]["2. Symbol"];
+               
+                $('#jsonData').html('');
+                $('#jsonData').append('<table border="1"><tbody><tr><th>' + 
+                  "Employee Id</th><th>Name</th><th>Salary</th>" + 
+                  "</tr><tr><td>" + 'id' +
+                  '</td><td>' + name +
+                '</td><td>' + time_period + '</td></tr></tbody></table>');
+
+            },
+            error: function (xhr) {
+                alert(xhr.responseText);
+            }
+        });
+    }
+  });
+
 </script>

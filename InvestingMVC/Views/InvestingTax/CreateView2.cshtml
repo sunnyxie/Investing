@@ -23,6 +23,9 @@
 }
 
 <div>
+    <div id="jsonData">
+    </div>
+
     <div class="div_table">
     </div>
     @Html.ActionLink("Back to List", "Index")
@@ -55,6 +58,30 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+        var GetJson = function () {
+            $.ajax({
+                type: "GET",
+                url: "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=5min&apikey=SNTHLFL54B25V1WX",
+                contentType: "application/json",
+                dataType: "json",
+                success: function (data) {
+                    var time_period = data["Meta Data"]["3. Last Refreshed"];
+                    var name = data["Meta Data"]["2. Symbol"];
+
+                    $('#jsonData').html('');
+                    $('#jsonData').append('<table border="1"><tbody><tr><th>' +
+                      "Employee Id</th><th>Name</th><th>Salary</th>" +
+                      "</tr><tr><td>" + 'id' +
+                      '</td><td>' + name +
+                    '</td><td>' + time_period + '</td></tr></tbody></table>');
+
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
 
         alert("boboiiii view2");
         $('#dtDayRecs').DataTable({

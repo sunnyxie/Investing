@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<InvestingMVC.Models.InvestingTax>
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -11,8 +11,35 @@
     <title>Index</title>
 </head>
 <body>
-    <div> 
+
+<div class="container-fluid">
+    <div class="row d-block d-xl-block">
+        <div class="justify-content-around"> Center me </div>
+        <div class="justify-content-xl-center justify-content-lg-center"> center me LX.</div>
     </div>
+    </div>
+       @*<div class="row">*@
+            <div class="d-flex d-xl-flex d-lg-flex" >
+                <div class="justify-content-center"> center me </div>
+                <div class="row">
+                    <div class="justify-content-around"> center me </div>
+                </div>
+                <div class="row">
+                    <div class="justify-content-xl-center justify-content-lg-center"> center me LX.</div>
+                </div>
+                <div class="card">
+                    <div class="card-header"> hoejifee</div>
+
+                    <div class="card-body">  body  body</div>
+                </div>
+                <div class="d-flex flex-column-reverse">
+                    <div class="px-2">Flex item 1</div>
+                    <div class="p-2">Flex item 2</div>
+                    <div class="p-2">Flex item 3</div>
+                </div>
+            </div>
+        @*</div>
+    </div>*@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-primary list-panel" id="list-panel">
@@ -52,7 +79,7 @@
         </div>
     </div>
 
-    @section Scripts
+    @section scripts
     {
         <script type="text/javascript">
          $(document).ready(function () {

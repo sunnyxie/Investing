@@ -25,6 +25,10 @@ namespace InvestingMVC.Controllers
             return View(_context.records.Include(r => r._type).ToList());
         }
 
+        public ActionResult TestZIndex()
+        {
+            return View();
+        }
 
         // Create view with day history recs.
         public ActionResult Create(int nShowDayHistory = 0)

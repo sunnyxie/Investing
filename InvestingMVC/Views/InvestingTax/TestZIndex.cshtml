@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Test Z-Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<h2>Test Z-Index</h2>*@
+<div class="row pt-3">
+    <div class="justify-content-center pl-5 mr-1 @*bg-warning*@" style="z-index:1;" id="fake-gv">
+
+        <div> <p> 
+                  helooooooooooooooooooooooooo how are you!<br />
+                  helooooooooooooooooooooooooo how are you!<br />
+                  helooooooooooooooooooooooooo how are you!<br />
+                  helooooooooooooooooooooooooo how are you!
+                  helooooooooooooooooooooooooo how are you!<br/>
+                  helooooooooooooooooooooooooo how are you!
+                  helooooooooooooooooooooooooo how are you!<br />
+                  heloooooooo Welcome  how are you!<br />
+                  heloooooooo Welcome  how are you!<br />
+                  heloooooooo Welcome  how are you!<br />
+                  heloooooooo Welcome  how are you!</p></div>
+
+    </div>
+
+    <div class="busy-code-css col-md-12" id="busy_part" style="z-index:4;left:50px;width:99%;">
+        <div class="justify-content-center" style="width:100%;">
+            <p style="color:blue;"><B>start processing...</B> <hr /></p>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <ul class="list-group">
+        <li class="list-group-item-light">light heloooooooo Welcome  how are you!</li>
+        <li class="list-group-item-light">light heloooooooo Welcome  how are you!</li>
+        <li class="list-group-item">heloooooooo Welcome  how are you!</li>
+        <li class="list-group-item-info">heloooooooo Welcome  how are you!</li>
+     </ul>
+    <div>
+        <input type="button" value="Click" onclick="TestIndex();" class="btn"/>
+    </div>
+        <p class="d-block">
+
+            heloooooooo Welcome  how are you!
+            heloooooooo Welcome  how are you!
+            heloooooooo Welcome  how are you!
+            heloooooooo Welcome  how are you!
+        </p>
+</div>
+
+
+@section scripts {
+ <script type="text/javascript">
+     $(document).ready(function () {
+         $("#busy_part").hide();
+
+     });
+
+     function TestIndex() {
+
+         $("#busy_part").css("width", "100%");
+         $("#busy_part").toggle();
+
+         //if ("#busy_part").attr("visible");
+         var isVisible = $('#busy_part').is(':visible');
+         if (isVisible) {
+             $("#fake-gv").css("opacity", "0.2");
+         }
+         else {
+             $("#fake-gv").css("opacity", "1");
+         }
+     }
+
+  </script>
+
+}
